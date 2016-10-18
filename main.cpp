@@ -3,85 +3,94 @@
 #include "LinkedList.h"
 #include <iostream>
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <SFML/System.hpp>
-void makeList(sf::RenderWindow* window);
+#define SIZE_TEXT 20
+void makeList(LinkedList<Box>* box_LinkedList);
 int main()
 {
+	srand(time(NULL));
+	LinkedList<Box> box_LinkedList;
 	sf::RenderWindow window(sf::VideoMode(800, 600), "Boxes");
-	sf::Thread thread(&makeList, &window);
+	window.setActive(false);
+	sf::Thread thread(&makeList, &box_LinkedList);
 	thread.launch();
+	sf::Font font;
+	font.loadFromFile("arial.ttf");
 	while (window.isOpen())
 	{
-		//thread.launch();
-		// check all the window's events that were triggered since the last iteration of the loop
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-		  //thread.launch();
 			if (event.type == sf::Event::Closed)
 			{
 				thread.terminate();
 				window.close();
 			}
-			window.clear();
-			window.display();
 		}
+			window.clear();
+
+			for(int i = 0; box_LinkedList.size() > i ; i++)
+			{
+				sf::Text text(std::to_string(i + 1), font, SIZE_TEXT);
+				text.setColor(sf::Color::Green);
+				sf::RectangleShape boxes(sf::Vector2f(box_LinkedList.getDataAtPosition(i).getWidth(), box_LinkedList.getDataAtPosition(i).getHeight()));
+				boxes.setPosition(box_LinkedList.getDataAtPosition(i).getX(), box_LinkedList.getDataAtPosition(i).getY());
+				boxes.setFillColor(sf::Color(box_LinkedList.getDataAtPosition(i).getRed(), box_LinkedList.getDataAtPosition(i).getGreen(), box_LinkedList.getDataAtPosition(i).getBlue()));
+				text.setPosition( (box_LinkedList.getDataAtPosition(i).getX() + 0.5*box_LinkedList.getDataAtPosition(i).getWidth()) , (box_LinkedList.getDataAtPosition(i).getY() + 0.5*box_LinkedList.getDataAtPosition(i).getHeight()));
+				window.draw(boxes);
+				window.draw(text);
+			}
+			window.display();
 	}
 	return 0;
 }
 
-void makeList(sf::RenderWindow* window)
+void makeList(LinkedList<Box>* box_LinkedList)
 {
-	LinkedList<Box> linkedList;
-	char option = 'a';
-	while(window->isOpen())
-	{
-		//window->clear();
-		//window->display();
 
+	char option = 'x';
 		while (option != 'q')
 		{
-	    cout<<"a. New random box" <<endl;
-	    cout<<"b. New custom box" <<endl;
-	    cout<<"q. Quit program" <<endl;
+			std::cout << "\n== Box List Test Menu ==\n";
+	    std::cout<<"a. New random box" <<std::endl;
+	    std::cout<<"b. New custom box" <<std::endl;
+			std::cout<<"c. Delete boxes" <<std::endl;
+	    std::cout<<"q. Quit program" <<std::endl;
 	    cin>>option;
 	    switch (option) {
 	      case 'a':
 	      {
 	        Box new_box;
-	        cout<< new_box.getX()<<", "<<new_box.getY()<<endl;
-	        sf::RectangleShape boxes(sf::Vector2f(new_box.getWidth(), new_box.getHeight()));
-	        boxes.setPosition(new_box.getX(), new_box.getY());
-	        window->draw(boxes);
-	        window->display();
-	        linkedList.insertTail(new_box);
+	        std::cout<< new_box.getX()<<", "<<new_box.getY()<<std::endl;
+	        box_LinkedList->insertTail(new_box);
 	        break;
 	      }
 
 	      case 'b':
 	      {
-	        Box new_box;
-	        unsigned int custom;
-	        cout << "Set width" <<endl;
-	        cin>>custom;
-	        new_box.setWidth(custom);
-	        cout << "Set height" <<endl;
-	        cin>>custom;
-	        new_box.setHeight(custom);
-	        cout<< new_box.getX()<<", "<<new_box.getY()<<endl;
-	        sf::RectangleShape boxe(sf::Vector2f(new_box.getWidth(), new_box.getHeight()));
-	        boxe.setPosition(new_box.getX(), new_box.getY());
-	        window->draw(boxe);
-	        window->display();
-	        linkedList.insertTail(new_box);
+	        unsigned int x, y, width, height;
+	        std::cout << "Set width" <<std::endl;
+	        cin>>width;
+	        std::cout << "Set height" <<std::endl;
+	        cin>>height;
+					std::cout << "Enter the distance from the top of the screen: " <<std::endl;
+	        cin>>y;
+	        std::cout << "Enter the distance from the left of the screen: " <<std::endl;
+	        cin>>x;
+					Box new_box(x, y, width, height);
+	        std::cout<< new_box.getX()<<", "<<new_box.getY()<<std::endl;
+	        box_LinkedList->insertTail(new_box);
 	        break;
 	      }
 
+				case 'c':
+					box_LinkedList->clear();
+				break;
+
 	      case 'q':
-	        window->close();
+	        std::cout << "End of the program" <<std::endl;
 	        break;
 	    }
 		}
-	}
+		return;
 }

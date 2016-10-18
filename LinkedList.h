@@ -10,12 +10,12 @@ Delete methods implemented:
     -DeleteHead
     -RemoveHead
     -RemoveTail
-    
+
 Search methods implemented:
     -GetDataAtHead
     -GetDataAtTail
     -GetDataAtPosition
-    
+
 Print methods implemented:
     -PrintList
 */
@@ -44,22 +44,22 @@ class LinkedList{
         void insertTail(Node<T> * new_node);
         void insertAtPosition(T data, int position);
         void insertAtPosition(Node<T> * new_node, int position);
-        
+
         //Delete methods
         T deleteHead();
         Node<T> * removeHead();
         Node<T> * removeTail();
         Node<T> * removeItem(T data);
         Node<T> * removeFromPosition(int position);
-        
+
         //Search methods
         T getDataAtHead();
         T getDataAtTail();
         T getDataAtPosition(int position);
-        
+
         //Print methods
         void printList();
-        
+
         //Helper methods
         int size();
         Node<T> * getHead() const { return head;}
@@ -121,7 +121,7 @@ void LinkedList<T>::insertTail(Node<T> * new_node)
         {
             item = item->getNext();
         }
-        item->setNext(new_node);    
+        item->setNext(new_node);
     }
 }
 
@@ -211,20 +211,20 @@ Node<T> * LinkedList<T>::removeTail()
     }
     //Change the tail of the list
     previous->setNext(nullptr);
-    
+
     return item;
 }
 
 /*template <class T>
 Node<T> * LinkedList<T>::removeItem(T data)
 {
-    
+
 }
 
 template <class T>
 Node<T> * LinkedList<T>::removeFromPosition(int position)
 {
-    
+
 }*/
 
 
@@ -255,7 +255,7 @@ T LinkedList<T>::getDataAtTail()
         {
             item = item->getNext();
         }
-        return item->getData();    
+        return item->getData();
     }
 }
 
@@ -280,14 +280,14 @@ T LinkedList<T>::getDataAtPosition(int position)
             return temp1->getData();
         }
     }
-    
-    else if(position >= 0 && position >= length) 
+
+    else if(position >= 0 && position >= length)
     {
         cout << "The position " << position << " doesn't exist, but this program can show you the tail of the list" <<endl;
         return getDataAtTail();
     }
-    
-    else 
+
+    else
     {
         cout << "The position " << position << " doesn't exist, but this program can show you the head of the list" <<endl;
         return getDataAtHead();
@@ -301,7 +301,7 @@ template <class T>
 void LinkedList<T>::printList()
 {
     Node<T> * item = head;
-    
+
     std::cout << "[ ";
     while(item != nullptr)
     {
