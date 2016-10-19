@@ -10,6 +10,7 @@ Delete methods implemented:
     -DeleteHead
     -RemoveHead
     -RemoveTail
+    -RemoveFromPosition
 
 Search methods implemented:
     -GetDataAtHead
@@ -219,13 +220,44 @@ Node<T> * LinkedList<T>::removeTail()
 Node<T> * LinkedList<T>::removeItem(T data)
 {
 
-}
+}*/
 
 template <class T>
 Node<T> * LinkedList<T>::removeFromPosition(int position)
 {
+    length = size();
+    if(position >= 0 && position < length)
+    {
+        if(head == nullptr || position == 0)
+        {
+            return removeHead();
+        }
+        else
+        {
+            Node<T>* item = head;
+            while(--position != 0)
+            {
+                item = item->getNext();
+            }
+            Node<T>* del = item->getNext();
+            Node<T>* after = del->getNext();
+            item->setNext(after);
+            return del;
+        }
+    }
 
-}*/
+    else if(position >= 0 && position >= length)
+    {
+        cout << "The position " << position << " doesn't exist, but this program will remove the tail of the list" <<endl;
+        return removeTail();
+    }
+
+    else
+    {
+        cout << "The position " << position << " doesn't exist, but this program will remove the head of the list" <<endl;
+        return removeHead();
+    }
+}
 
 
 /////////SEARCH METHODS///////////////////////

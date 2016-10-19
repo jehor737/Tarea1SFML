@@ -1,4 +1,7 @@
-/*Jesús Horacio Rojas Cortés A01020026*/
+/*Jesús Horacio Rojas Cortés A01020026
+A01020026@itesm.mx
+Main class with SFML functions to draw a list of boxes
+*/
 #include "Box.h"
 #include "LinkedList.h"
 #include <iostream>
@@ -31,8 +34,8 @@ int main()
 
 			for(int i = 0; box_LinkedList.size() > i ; i++)
 			{
-				sf::Text text(std::to_string(i + 1), font, SIZE_TEXT);
-				text.setColor(sf::Color::Green);
+				sf::Text text(std::to_string(i), font, SIZE_TEXT);
+				text.setColor(sf::Color::White);
 				sf::RectangleShape boxes(sf::Vector2f(box_LinkedList.getDataAtPosition(i).getWidth(), box_LinkedList.getDataAtPosition(i).getHeight()));
 				boxes.setPosition(box_LinkedList.getDataAtPosition(i).getX(), box_LinkedList.getDataAtPosition(i).getY());
 				boxes.setFillColor(sf::Color(box_LinkedList.getDataAtPosition(i).getRed(), box_LinkedList.getDataAtPosition(i).getGreen(), box_LinkedList.getDataAtPosition(i).getBlue()));
@@ -54,14 +57,19 @@ void makeList(LinkedList<Box>* box_LinkedList)
 			std::cout << "\n== Box List Test Menu ==\n";
 	    std::cout<<"a. New random box" <<std::endl;
 	    std::cout<<"b. New custom box" <<std::endl;
-			std::cout<<"c. Delete boxes" <<std::endl;
+			std::cout<<"c. New random box at position" <<std::endl;
+			std::cout<<"d. New custom box at position" <<std::endl;
+			std::cout<<"e. Delete the list" <<std::endl;
+			std::cout<<"f. Delete the last box" <<std::endl;
+			std::cout<<"g. Delete a specific box" <<std::endl;
+			std::cout<<"h. Delete the first box" <<std::endl;
 	    std::cout<<"q. Quit program" <<std::endl;
+			std::cout<<"Enter your selection" <<std::endl;
 	    cin>>option;
 	    switch (option) {
 	      case 'a':
 	      {
 	        Box new_box;
-	        std::cout<< new_box.getX()<<", "<<new_box.getY()<<std::endl;
 	        box_LinkedList->insertTail(new_box);
 	        break;
 	      }
@@ -78,13 +86,55 @@ void makeList(LinkedList<Box>* box_LinkedList)
 	        std::cout << "Enter the distance from the left of the screen: " <<std::endl;
 	        cin>>x;
 					Box new_box(x, y, width, height);
-	        std::cout<< new_box.getX()<<", "<<new_box.getY()<<std::endl;
 	        box_LinkedList->insertTail(new_box);
 	        break;
 	      }
 
 				case 'c':
+	      {
+					int position;
+					std::cout << "Enter the position you want to insert" << std::endl;
+					std::cin >> position;
+	        Box new_box;
+	        box_LinkedList->insertAtPosition(new_box, position);
+	        break;
+	      }
+
+	      case 'd':
+	      {
+	        unsigned int x, y, width, height;
+					int position;
+	        std::cout << "Set width" <<std::endl;
+	        cin>>width;
+	        std::cout << "Set height" <<std::endl;
+	        cin>>height;
+					std::cout << "Enter the distance from the top of the screen: " <<std::endl;
+	        cin>>y;
+	        std::cout << "Enter the distance from the left of the screen: " <<std::endl;
+	        cin>>x;
+					std::cout << "Enter the position you want to insert" << std::endl;
+					std::cin >> position;
+					Box new_box(x, y, width, height);
+	        box_LinkedList->insertAtPosition(new_box, position);
+	        break;
+	      }
+
+				case 'e':
 					box_LinkedList->clear();
+				break;
+
+				case 'f':
+					box_LinkedList->removeTail();
+				break;
+
+				case 'g':
+					int position;
+					std::cout << "Enter the position you want to delete " << std::endl;
+					std::cin >> position;
+					box_LinkedList->removeFromPosition(position);
+				break;
+				case 'h':
+					box_LinkedList->removeHead();
 				break;
 
 	      case 'q':
