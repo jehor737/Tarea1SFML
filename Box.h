@@ -1,6 +1,6 @@
 /*
 Jesús Horacio Rojas Cortés A01020026
-Box class
+Box class for use with the SFML
 */
 #ifndef BOX_H
 #define BOX_H
@@ -28,12 +28,12 @@ public:
     unsigned int getY(){ return y; }
     unsigned int getWidth(){ return width; }
     unsigned int getHeight(){ return height; }
-    unsigned int getRed(){ return R; }
-    unsigned int getGreen(){ return G; }
-    unsigned int getBlue(){ return B; }
+    unsigned int getRed(){ return R; }//R from RGB
+    unsigned int getGreen(){ return G; }//G from RGB
+    unsigned int getBlue(){ return B; }//B from RGB
 };
 
-Box::Box()
+Box::Box()//default new random box
 {
     x = rand() % 800 + 1;
     y = rand() % 600 + 1;
@@ -43,12 +43,15 @@ Box::Box()
     G = rand() % 256;
     B = rand() % 256;
 }
-Box::Box(unsigned int _x, unsigned int _y, unsigned int _width, unsigned int _height)
+Box::Box(unsigned int _x, unsigned int _y, unsigned int _width, unsigned int _height)//Custom box, color still random
 {
-  x = _x;
-  y = _y;
-  width = _width;
-  height = _height;
+    x = _x;
+    y = _y;
+    width = _width;
+    height = _height;
+    R = rand() % 256;
+    G = rand() % 256;
+    B = rand() % 256;
 }
 
 #endif

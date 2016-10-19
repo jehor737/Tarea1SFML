@@ -235,13 +235,13 @@ Node<T> * LinkedList<T>::removeFromPosition(int position)
         else
         {
             Node<T>* item = head;
-            while(--position != 0)
+            while(--position != 0)//decrement position, until reach the index specified
             {
-                item = item->getNext();
+                item = item->getNext();//advances to the next node
             }
-            Node<T>* del = item->getNext();
-            Node<T>* after = del->getNext();
-            item->setNext(after);
+            Node<T>* del = item->getNext();//store the node to-be-deleted
+            Node<T>* after = del->getNext();//store the node after the to-be-deleted node
+            item->setNext(after);//Connect the node behind the to-be-deleted node with the next node after the to-be-deleted node
             return del;
         }
     }
