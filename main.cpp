@@ -89,6 +89,7 @@ void makeList(LinkedList<Box>* box_LinkedList)
 
 	      case 'q':
 	        std::cout << "End of the program" <<std::endl;
+					exit(0);
 	        break;
 	    }
 		}
